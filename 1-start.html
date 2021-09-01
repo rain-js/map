@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #container {width:600px; height: 400px; }  
+  </style>
+
+</head>
+<body>
+  <div id="container"></div> 
+
+  <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=b372b17731f88018418c34982dbf2af7"></script>
+  <script>
+    // 参照官方文档快速上手
+    // https://lbs.amap.com/api/javascript-api/guide/abc/quickstart
+
+    // var map = new AMap.Map('container');
+
+    // Map == 地图（标准底图）
+    var map = new AMap.Map('container', {
+      zoom:11,//级别
+      center: [113.92928,22.54897],//中心点坐标
+      viewMode:'3D'//使用3D视图
+    });
+
+    
+    /**
+     * 绘制覆盖物 == 点标记 Marker、文本标记 Text、圆点标记 CircleMarker等
+     */
+    // 点标记 Marker
+    var marker = new AMap.Marker({
+      position:[113.92928,22.54897]//位置
+    })
+    map.add(marker);//添加到地图
+
+    // 矢量图形 Circle
+    var circle = new AMap.Circle({
+      center: [113.92928,22.54897],
+      radius: 1000, //半径
+      borderWeight: 3,
+      strokeColor: "#FF33FF", 
+      strokeOpacity: 1,
+      strokeWeight: 6,
+      strokeOpacity: 0.2,
+      fillOpacity: 0.4,
+      strokeStyle: 'dashed',
+      strokeDasharray: [10, 10], // 线样式还支持 'dashed'
+      fillColor: '#1791fc',
+      zIndex: 50,
+    })
+
+    circle.setMap(map)
+    map.setFitView([ circle ])  // 缩放地图到合适的视野级别
+    
+    // 地图事件
+    map.on('click', function(ev) {
+      console.log('ev', ev)
+      var target = ev.target; // 触发事件的对象
+      
+      var lnglat = ev.lnglat; // 触发事件的地理坐标，AMap.LngLat 类型
+      
+      var pixel = ev.pixel;   // 触发事件的像素坐标，AMap.Pixel 类型
+      
+      var type = ev.type;     // 触发事件类型
+    });
+  </script>
+</body>
+</html>
